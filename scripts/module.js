@@ -1,13 +1,13 @@
 /**
- * Token Ease — v13 Rebuild
+ * Token Ease — v13/v14 Rebuild
  *
  * Original module by Wasp & Kerrec Snowmane
  * (https://github.com/fantasycalendar/FoundryVTT-TokenEase)
  *
- * Rebuilt for FoundryVTT v13 by shakugannosaints
+ * Rebuilt for FoundryVTT v13/v14 by shakugannosaints
  * (https://github.com/shakugannosaints/)
  *
- * v13 movement architecture:
+ * v13/v14 movement architecture:
  *  - preUpdateToken no longer carries animation options through the update pipeline.
  *  - Token animation is driven by Token#animate(to, options: TokenAnimationOptions).
  *  - The correct extension points are the @protected methods on the Token canvas object:
@@ -27,7 +27,7 @@ import { easeFunctions } from "./lib/ease.js";
 // Init — register settings, keybindings, and Token subclass
 // ---------------------------------------------------------------------------
 Hooks.once("init", () => {
-	console.log("Token Ease (v13) | Initialising …");
+	console.log("Token Flow | Initialising …");
 	configure_settings();
 	configure_hotkeys();
 
@@ -50,7 +50,6 @@ Hooks.once("init", () => {
 		 *   1. Per-token flag override  (set via the Token Ease config button)
 		 *   2. World-level default-ease setting
 		 *   3. Linear (Foundry default)
-		 * @protected
 		 * @param {TokenAnimationOptions} options
 		 * @returns {Function|undefined}
 		 */
@@ -147,7 +146,7 @@ Hooks.once("init", () => {
 
 	CONFIG.Token.objectClass = TokenEaseToken;
 
-	console.log("Token Ease (v13) | Token subclass registered. Ready to (pl)ease!");
+	console.log("Token Flow | Token subclass registered. Ready to (pl)ease!");
 });
 
 // ---------------------------------------------------------------------------
@@ -160,15 +159,15 @@ function addTokenEaseButton(app, buttons) {
 	if (!tokenDoc?.isOwner) return;
 
 	buttons.unshift({
-		class: "configure-token-ease",
+		classes: "configure-token-ease",
 		icon: "fas fa-running",
 		label: "Token Ease",
 		action: "tokenEaseConfig",
-		onclick: () => TokenEaseConfig.show(tokenDoc)
+		onClick: () => TokenEaseConfig.show(tokenDoc)
 	});
 }
 
-// v13 ApplicationV2 fires getHeaderControlsApplicationV2.
+// ApplicationV2 fires getHeaderControlsApplicationV2 in v13 and v14.
 Hooks.on("getHeaderControlsApplicationV2", addTokenEaseButton);
 // Keep legacy hook as fallback for older v13 builds.
 Hooks.on("getTokenConfigHeaderButtons", addTokenEaseButton);
