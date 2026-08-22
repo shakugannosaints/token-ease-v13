@@ -1,6 +1,6 @@
 # Token Flow
 
-**FoundryVTT v13 compatible rebuild of [Token Ease](https://github.com/fantasycalendar/FoundryVTT-TokenEase)**
+**FoundryVTT v13/v14 compatible rebuild of [Token Ease](https://github.com/fantasycalendar/FoundryVTT-TokenEase)**
 
 Maintained by [shakugannosaints](https://github.com/shakugannosaints/)
 
@@ -49,9 +49,9 @@ Hold **Alt** (default binding, re-bindable in **Configure Controls**) while movi
 
 ---
 
-## v13 Rebuild Notes
+## v13/v14 Compatibility Notes
 
-The original Token Ease module used APIs that changed or were removed in FoundryVTT v13:
+The original Token Ease module used APIs that changed or were removed in FoundryVTT v13. The same token animation extension points remain available in v14; v14-specific maintenance is limited to the ApplicationV2 integration and compatibility metadata:
 
 | Area | v12 / original | v13 rebuild |
 |---|---|---|
@@ -59,7 +59,9 @@ The original Token Ease module used APIs that changed or were removed in Foundry
 | Open windows list | `ui.windows` | `foundry.applications.instances` |
 | CanvasAnimation | `CanvasAnimation[name]` (global) | `foundry.canvas.animation.CanvasAnimation[name]` |
 | Debounce helper | `debounce()` (global) | `foundry.utils.debounce()` |
-| Token config hook | `getTokenConfigHeaderButtons` | `getTokenConfigV2HeaderButtons` (+ fallback) |
+| Token config hook | `getTokenConfigHeaderButtons` | `getHeaderControlsApplicationV2` (+ legacy fallback) |
+| Header controls | Legacy `class` / `onclick` fields | `classes` / `onClick` ApplicationV2 entries |
+| Open windows list | Global application registry | `TokenEaseConfig.instances()` |
 
 ---
 
