@@ -1,7 +1,7 @@
 {
   "id": "token-flow",
   "title": "Token Flow",
-  "description": "Rebuilt token-ease for FoundryVTT v13 and v14. Enhances native token movement by exposing custom easing functions, movement speed, and animation duration in token configuration. Originally created by Wasp & Kerrec Snowmane (FantasyCalendar); reconstructed for v13 compatibility by shakugannosaints.",
+  "description": "Rebuilt token-ease for FoundryVTT v13 and v14. Enhances native token movement by exposing custom easing functions, movement speed, and animation duration in token configuration. Originally created by Wasp & Kerrec Snowmane (FantasyCalendar); reconstructed for v13/v14 compatibility by shakugannosaints.",
   "authors": [
     {
       "name": "shakugannosaints",
