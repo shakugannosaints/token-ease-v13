@@ -53,10 +53,9 @@ Hold **Alt** (default binding, re-bindable in **Configure Controls**) while movi
 
 The original Token Ease module used APIs that changed or were removed in FoundryVTT v13. The same token animation extension points remain available in v14; v14-specific maintenance is limited to the ApplicationV2 integration and compatibility metadata:
 
-| Area | v12 / original | v13 rebuild |
+| Area | v12 / original | v13/v14 rebuild |
 |---|---|---|
 | Config UI | `FormApplication` | `ApplicationV2` + `HandlebarsApplicationMixin` |
-| Open windows list | `ui.windows` | `foundry.applications.instances` |
 | CanvasAnimation | `CanvasAnimation[name]` (global) | `foundry.canvas.animation.CanvasAnimation[name]` |
 | Debounce helper | `debounce()` (global) | `foundry.utils.debounce()` |
 | Token config hook | `getTokenConfigHeaderButtons` | `getHeaderControlsApplicationV2` (+ legacy fallback) |
