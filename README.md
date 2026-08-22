@@ -1,6 +1,6 @@
 # Token Flow
 
-**FoundryVTT v13 compatible rebuild of [Token Ease](https://github.com/fantasycalendar/FoundryVTT-TokenEase)**
+**Foundry VTT v14 compatible rebuild of [Token Ease](https://github.com/fantasycalendar/FoundryVTT-TokenEase)**
 
 Maintained by [shakugannosaints](https://github.com/shakugannosaints/)
 
@@ -16,6 +16,17 @@ Token Ease lets Game Masters and players customise how tokens animate when they 
 - **Ease In / Out** — apply easing at the start, end, or both ends of each movement
 - **Per-token overrides** — open the Token Ease panel from any token's config sheet to override the world defaults for that specific token
 - **Instant Move Hotkey** — hold **Alt** while moving a token to skip animation entirely
+
+---
+
+## Version support
+
+| Foundry VTT | Token Flow | Status |
+|---|---|---|
+| v14 | 1.0.2 and later | Current, maintained release |
+| v13 | 1.0.1 | Legacy release; no further maintenance |
+
+Foundry VTT v13 users should remain on **Token Flow 1.0.1**. It remains available from the [GitHub Releases archive](https://github.com/shakugannosaints/token-flow/releases); download the assets attached to the 1.0.1 release. Version 1.0.2 and later require Foundry VTT v14.
 
 ---
 
@@ -49,17 +60,17 @@ Hold **Alt** (default binding, re-bindable in **Configure Controls**) while movi
 
 ---
 
-## v13 Rebuild Notes
+## v14 Compatibility Notes
 
-The original Token Ease module used APIs that changed or were removed in FoundryVTT v13:
+Token Flow 1.0.2 targets Foundry VTT v14. The token movement architecture remains based on Foundry's native Token animation APIs; the v14 update is limited to the current ApplicationV2 contracts and package metadata:
 
-| Area | v12 / original | v13 rebuild |
+| Area | Older implementation | v14 implementation |
 |---|---|---|
 | Config UI | `FormApplication` | `ApplicationV2` + `HandlebarsApplicationMixin` |
-| Open windows list | `ui.windows` | `foundry.applications.instances` |
+| Open config windows | Global application registry | `TokenEaseConfig.instances()` |
 | CanvasAnimation | `CanvasAnimation[name]` (global) | `foundry.canvas.animation.CanvasAnimation[name]` |
 | Debounce helper | `debounce()` (global) | `foundry.utils.debounce()` |
-| Token config hook | `getTokenConfigHeaderButtons` | `getTokenConfigV2HeaderButtons` (+ fallback) |
+| Token config hook | Legacy TokenConfig header hook | `getHeaderControlsApplicationV2` |
 
 ---
 
