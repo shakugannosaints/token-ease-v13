@@ -5,11 +5,11 @@ const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
  * Token Ease per-token configuration application.
- * Rebuilt for FoundryVTT v13 using ApplicationV2 + HandlebarsApplicationMixin.
+ * Compatible with FoundryVTT v13/v14 using ApplicationV2 + HandlebarsApplicationMixin.
  *
  * Originally part of TokenEase by Wasp & Kerrec Snowmane
  * (https://github.com/fantasycalendar/FoundryVTT-TokenEase).
- * Rebuilt for v13 by shakugannosaints (https://github.com/shakugannosaints/).
+ * Rebuilt for v13/v14 by shakugannosaints (https://github.com/shakugannosaints/).
  */
 export default class TokenEaseConfig extends HandlebarsApplicationMixin(ApplicationV2) {
 
@@ -61,7 +61,7 @@ export default class TokenEaseConfig extends HandlebarsApplicationMixin(Applicat
 	 */
 	static show(token) {
 		// Search existing open windows for a match
-		for (const app of Object.values(foundry.applications.instances)) {
+		for (const app of TokenEaseConfig.instances()) {
 			if (app instanceof TokenEaseConfig && app.token === token) {
 				app.render(true, { focus: true });
 				return app;
