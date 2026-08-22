@@ -10,11 +10,11 @@
  * v14 movement architecture:
  *  - preUpdateToken no longer carries animation options through the update pipeline.
  *  - Token animation is driven by Token#animate(to, options: TokenAnimationOptions).
- *  - The correct extension points are the @protected methods on the Token canvas object:
+ *  - Speed and duration use the protected Token canvas methods:
  *      _getAnimationMovementSpeed(options) → number   (grid spaces / second)
  *      _getAnimationDuration(from, to, options) → number   (milliseconds; 0 = use speed)
- *      _getAnimationEasingFunction(options) → function | undefined
- *  - Register a Token subclass via CONFIG.Token.objectClass to override these.
+ *  - Easing is injected through TokenAnimationOptions before delegating to Token#animate.
+ *  - Register a Token subclass via CONFIG.Token.objectClass to layer these changes.
  *  - Global default speed lives at CONFIG.Token.movement.defaultSpeed.
  */
 
@@ -151,10 +151,10 @@ Hooks.once("init", () => {
 
 // ---------------------------------------------------------------------------
 // Token Config header button — adds "Token Ease" button to the token sheet.
-// v13 uses getHeaderControlsApplicationV2 for ApplicationV2-based sheets.
+// v14 uses getHeaderControlsApplicationV2 for ApplicationV2-based sheets.
 // ---------------------------------------------------------------------------
 function addTokenEaseButton(app, buttons) {
-	// Resolve the underlying token document from both old and new configs.
+	// Resolve the underlying token document from TokenConfig.
 	const tokenDoc = app.token ?? app.document ?? app.object?.document;
 	if (!tokenDoc?.isOwner) return;
 
