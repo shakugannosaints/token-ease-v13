@@ -1,20 +1,20 @@
 /**
- * Token Ease — v13 Rebuild
+ * Token Flow — Foundry VTT v14
  *
  * Original module by Wasp & Kerrec Snowmane
  * (https://github.com/fantasycalendar/FoundryVTT-TokenEase)
  *
- * Rebuilt for FoundryVTT v13 by shakugannosaints
+ * Maintained for Foundry VTT v14 by shakugannosaints
  * (https://github.com/shakugannosaints/)
  *
- * v13 movement architecture:
+ * v14 movement architecture:
  *  - preUpdateToken no longer carries animation options through the update pipeline.
  *  - Token animation is driven by Token#animate(to, options: TokenAnimationOptions).
- *  - The correct extension points are the @protected methods on the Token canvas object:
+ *  - Speed and duration use the protected Token canvas methods:
  *      _getAnimationMovementSpeed(options) → number   (grid spaces / second)
  *      _getAnimationDuration(from, to, options) → number   (milliseconds; 0 = use speed)
- *      _getAnimationEasingFunction(options) → function | undefined
- *  - Register a Token subclass via CONFIG.Token.objectClass to override these.
+ *  - Easing is injected through TokenAnimationOptions before delegating to Token#animate.
+ *  - Register a Token subclass via CONFIG.Token.objectClass to layer these changes.
  *  - Global default speed lives at CONFIG.Token.movement.defaultSpeed.
  */
 
@@ -27,7 +27,7 @@ import { easeFunctions } from "./lib/ease.js";
 // Init — register settings, keybindings, and Token subclass
 // ---------------------------------------------------------------------------
 Hooks.once("init", () => {
-	console.log("Token Ease (v13) | Initialising …");
+	console.log("Token Flow (v1.0.2) | Initialising …");
 	configure_settings();
 	configure_hotkeys();
 
@@ -50,7 +50,6 @@ Hooks.once("init", () => {
 		 *   1. Per-token flag override  (set via the Token Ease config button)
 		 *   2. World-level default-ease setting
 		 *   3. Linear (Foundry default)
-		 * @protected
 		 * @param {TokenAnimationOptions} options
 		 * @returns {Function|undefined}
 		 */
@@ -147,28 +146,26 @@ Hooks.once("init", () => {
 
 	CONFIG.Token.objectClass = TokenEaseToken;
 
-	console.log("Token Ease (v13) | Token subclass registered. Ready to (pl)ease!");
+	console.log("Token Flow (v1.0.2) | Token subclass registered. Ready to (pl)ease!");
 });
 
 // ---------------------------------------------------------------------------
 // Token Config header button — adds "Token Ease" button to the token sheet.
-// v13 uses getHeaderControlsApplicationV2 for ApplicationV2-based sheets.
+// v14 uses getHeaderControlsApplicationV2 for ApplicationV2-based sheets.
 // ---------------------------------------------------------------------------
 function addTokenEaseButton(app, buttons) {
-	// Resolve the underlying token document from both old and new configs.
+	// Resolve the underlying token document from TokenConfig.
 	const tokenDoc = app.token ?? app.document ?? app.object?.document;
 	if (!tokenDoc?.isOwner) return;
 
 	buttons.unshift({
-		class: "configure-token-ease",
+		classes: "configure-token-ease",
 		icon: "fas fa-running",
 		label: "Token Ease",
 		action: "tokenEaseConfig",
-		onclick: () => TokenEaseConfig.show(tokenDoc)
+		onClick: () => TokenEaseConfig.show(tokenDoc)
 	});
 }
 
-// v13 ApplicationV2 fires getHeaderControlsApplicationV2.
+// Foundry VTT v14 TokenConfig is ApplicationV2-based.
 Hooks.on("getHeaderControlsApplicationV2", addTokenEaseButton);
-// Keep legacy hook as fallback for older v13 builds.
-Hooks.on("getTokenConfigHeaderButtons", addTokenEaseButton);
