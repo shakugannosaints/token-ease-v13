@@ -35,7 +35,7 @@ Foundry VTT v13 users should remain on **Token Flow 1.0.1**. It remains availabl
 1. In Foundry VTT's **Add-on Modules** screen, click **Install Module**.
 2. Paste the manifest URL:
    ```
-   https://github.com/shakugannosaints/token-ease-v13/releases/latest/download/module.json
+   https://github.com/shakugannosaints/token-flow/releases/latest/download/module.json
    ```
 3. Click **Install**, then enable the module in your World.
 
@@ -68,7 +68,6 @@ Token Flow 1.0.2 targets Foundry VTT v14. The token movement architecture remain
 |---|---|---|
 | Config UI | `FormApplication` | `ApplicationV2` + `HandlebarsApplicationMixin` |
 | Open config windows | Global application registry | `TokenEaseConfig.instances()` |
-| CanvasAnimation | `CanvasAnimation[name]` (global) | `foundry.canvas.animation.CanvasAnimation[name]` |
 | Debounce helper | `debounce()` (global) | `foundry.utils.debounce()` |
 | Token config hook | Legacy TokenConfig header hook | `getHeaderControlsApplicationV2` |
 
@@ -77,7 +76,7 @@ Token Flow 1.0.2 targets Foundry VTT v14. The token movement architecture remain
 ## Credits
 
 - **Original module**: [Token Ease](https://github.com/fantasycalendar/FoundryVTT-TokenEase) by **Wasp** (Haxxer) and **Kerrec Snowmane** (ggagnon76) — [Fantasy Calendar](https://app.fantasy-calendar.com/)
-- **v13 rebuild**: [shakugannosaints](https://github.com/shakugannosaints/)
+- **v13 rebuild and v14 maintenance**: [shakugannosaints](https://github.com/shakugannosaints/)
 
 ---
 
