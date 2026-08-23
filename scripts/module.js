@@ -27,7 +27,7 @@ import { easeFunctions } from "./lib/ease.js";
 // Init — register settings, keybindings, and Token subclass
 // ---------------------------------------------------------------------------
 Hooks.once("init", () => {
-	console.log("Token Flow (v1.0.2) | Initialising …");
+	console.log("Token Flow (v1.0.3) | Initialising …");
 	configure_settings();
 	configure_hotkeys();
 
@@ -146,7 +146,7 @@ Hooks.once("init", () => {
 
 	CONFIG.Token.objectClass = TokenEaseToken;
 
-	console.log("Token Flow (v1.0.2) | Token subclass registered. Ready to (pl)ease!");
+	console.log("Token Flow (v1.0.3) | Token subclass registered. Ready to (pl)ease!");
 });
 
 // ---------------------------------------------------------------------------
@@ -155,8 +155,8 @@ Hooks.once("init", () => {
 // ---------------------------------------------------------------------------
 function addTokenEaseButton(app, buttons) {
 	// Resolve the underlying token document from TokenConfig.
-	const tokenDoc = app.token ?? app.document ?? app.object?.document;
-	if (!tokenDoc?.isOwner) return;
+	const tokenDoc = app.document;
+	if (tokenDoc?.documentName !== "Token" || !tokenDoc.isOwner) return;
 
 	buttons.unshift({
 		classes: "configure-token-ease",
