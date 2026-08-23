@@ -2,8 +2,6 @@
 
 **Foundry VTT v14 compatible rebuild of [Token Ease](https://github.com/fantasycalendar/FoundryVTT-TokenEase)**
 
-Maintained by [shakugannosaints](https://github.com/shakugannosaints/)
-
 ---
 
 ## Overview
