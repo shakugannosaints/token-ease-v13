@@ -1,5 +1,5 @@
 const CONSTANTS = {
-	MODULE_NAME: "token-ease-v13",
+	MODULE_NAME: "token-flow",
 	MOVEMENT_FLAG: "movement",
 	ANIMATION_FLAG: "animation"
 }
