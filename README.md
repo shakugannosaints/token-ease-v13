@@ -23,10 +23,11 @@ Token Ease lets Game Masters and players customise how tokens animate when they 
 
 | Foundry VTT | Token Flow | Status |
 |---|---|---|
-| v14 | 1.0.2 and later | Current, maintained release |
+| v14 | 1.0.3 and later | Current, maintained release |
+| v14 | 1.0.2 | Superseded: invalid package flag scope |
 | v13 | 1.0.1 | Legacy release; no further maintenance |
 
-Foundry VTT v13 users should remain on **Token Flow 1.0.1**. It remains available from the [GitHub Releases archive](https://github.com/shakugannosaints/token-flow/releases); download the assets attached to the 1.0.1 release. Version 1.0.2 and later require Foundry VTT v14.
+Foundry VTT v13 users should remain on **Token Flow 1.0.1**. It remains available from the [GitHub Releases archive](https://github.com/shakugannosaints/token-flow/releases); download the assets attached to the 1.0.1 release. Version 1.0.3 and later require Foundry VTT v14. Version 1.0.2 should be upgraded because its legacy flag scope is rejected by Foundry VTT v14.
 
 ---
 
@@ -62,7 +63,7 @@ Hold **Alt** (default binding, re-bindable in **Configure Controls**) while movi
 
 ## v14 Compatibility Notes
 
-Token Flow 1.0.2 targets Foundry VTT v14. The token movement architecture remains based on Foundry's native Token animation APIs; the v14 update is limited to the current ApplicationV2 contracts and package metadata:
+Token Flow 1.0.3 targets Foundry VTT v14. The token movement architecture remains based on Foundry's native Token animation APIs; the v14 update is limited to the current ApplicationV2 contracts and package metadata:
 
 | Area | Older implementation | v14 implementation |
 |---|---|---|
