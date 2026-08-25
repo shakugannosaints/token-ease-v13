@@ -38,6 +38,17 @@ Foundry VTT v13 users should remain on **Token Flow 1.0.1**. It remains availabl
    ```
 3. Click **Install**, then enable the module in your World.
 
+## Release process
+
+1. Update `module.json` so its `version` matches the intended tag (for example, `1.0.4` for `v1.0.4`).
+2. Commit the change and create/push the tag.
+3. The **Release Foundry module** workflow creates and validates both required assets:
+   - `module.json` — release-specific manifest whose `download` points to that tag's ZIP.
+   - `module.zip` — installable package with `module.json` at the archive root.
+4. Confirm both assets appear on the GitHub Release before registering the version with Foundry.
+
+To repair an existing release, run the workflow manually from **Actions → Release Foundry module → Run workflow** and enter its existing tag. The workflow replaces both assets without creating a new version.
+
 ---
 
 ## Usage
