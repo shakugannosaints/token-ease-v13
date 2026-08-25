@@ -2,8 +2,6 @@ name: Release Foundry module
 
 on:
   push:
-    branches:
-      - main # One-time v1.0.3 repair trigger; remove after the successful run.
     tags:
       - "v*"
   workflow_dispatch:
@@ -29,10 +27,8 @@ jobs:
         run: |
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
             echo "tag=$DISPATCH_TAG" >> "$GITHUB_OUTPUT"
-          elif [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
-            echo "tag=$REF_NAME" >> "$GITHUB_OUTPUT"
           else
-            echo "tag=v1.0.3" >> "$GITHUB_OUTPUT"
+            echo "tag=$REF_NAME" >> "$GITHUB_OUTPUT"
           fi
 
       - uses: actions/checkout@v4
