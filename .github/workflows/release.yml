@@ -1,0 +1,75 @@
+name: Release Foundry module
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to build or repair (for example v1.0.3)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve tag
+        id: release
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_TAG: ${{ inputs.tag }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            echo "tag=$DISPATCH_TAG" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=$REF_NAME" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release.outputs.tag }}
+          fetch-depth: 0
+
+      - name: Build and validate assets
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          if [[ -x scripts/build-release.sh ]]; then
+            bash scripts/build-release.sh "$TAG"
+          else
+            # Old tags predate the release tooling; use the copy from main while
+            # packaging the currently checked-out tag.
+            git show origin/main:scripts/build-release.sh > /tmp/build-release.sh
+            REPO_ROOT="$GITHUB_WORKSPACE" bash /tmp/build-release.sh "$TAG"
+          fi
+
+      - name: Create release or replace its assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/module.json dist/module.zip --clobber
+          else
+            gh release create "$TAG" dist/module.json dist/module.zip \
+              --verify-tag --generate-notes --title "$TAG"
+          fi
+
+      - name: Verify published assets
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          base="https://github.com/${{ github.repository }}/releases/download/$TAG"
+          curl --fail --location --retry 5 "$base/module.json" -o /tmp/module.json
+          curl --fail --location --retry 5 "$base/module.zip" -o /tmp/module.zip
+          jq -e --arg tag "$TAG" \
+            '.download == ("https://github.com/shakugannosaints/token-flow/releases/download/" + $tag + "/module.zip")' \
+            /tmp/module.json
+          unzip -t /tmp/module.zip
+          unzip -Z1 /tmp/module.zip | grep -qx 'module.json'
